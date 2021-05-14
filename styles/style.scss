@@ -1,0 +1,157 @@
+$main-font: 'Roboto Slab';
+
+* {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    font-family: $main-font;
+}
+
+
+.general-container {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    background-image: url('https://wallpaper.dog/large/17058671.jpg');
+    background-size: cover;
+    overflow: scroll;
+    -webkit-box-shadow: inset 0px 0px 50px 50px rgba(0,0,0,0.76); 
+    box-shadow: inset 0px 0px 50px 50px rgba(0,0,0,0.76);
+
+    .title-container {
+        padding: 2vh;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        width: 50%;
+        background-color: rgba(48, 130, 48, .64);
+        border-radius: 45%;
+        transition-property: border-radius, background-color, transform;
+        transition-duration: 1.5s;
+
+        &:hover {
+            border-radius: 100%;
+            background-color: rgba(48, 130, 48, .0);
+            h1 {
+                transform: scale(1.5);
+                transition: transform 0.5s ease-in-out;
+            }
+
+        }
+        h1 {
+            width: 100%;
+            text-align: center;
+            font-size: 4vw;
+            font-weight: 400;color: #00b0c8;
+            text-shadow: .5px .5px 0 #7af162, .5px -.5px 0 #7af162, -.5px .5px 0 #7af162, -.5px -.5px 0 #7af162, .5px 0px 0 #7af162, 0px .5px 0 #7af162, -.5px 0px 0 #7af162, 0px -.5px 0 #7af162;
+        }
+    }
+    .text-input {
+        margin: 4vh;
+        padding: 1vh 0vh;
+        text-align: center;
+        &::placeholder {
+            color: rgb(234, 236, 236);
+            opacity: 1;
+            text-align: center;
+        }
+        justify-content: center;
+        align-self: center;
+        width: 25vw;
+        font-size: 100%;
+        font-weight: 400;
+        background-color: rgba(110, 173, 14, .7);
+        color: black;
+        &:focus {
+            background-color: rgba(110, 173, 14, 1);
+        }
+        
+    }
+
+    .search-btn  {
+        &:hover,
+        &:focus {
+        box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+        transform: translateY(-0.25em);
+        }
+
+        $colors:darkgreen;
+
+        @each $button, $color in $colors {
+            #{$button} {
+                --color: #{$color};
+                --hover: #{adjust-hue(darkgreen, 45deg)};
+            }
+        }
+        color: darkgreen;
+        transition: 0.25s;
+        
+        &:hover,
+        &:focus { 
+            border-color: var(--hover);
+            color: greenyellow;
+            background-color:  rgba(110, 173, 14, .9);
+        }
+        
+        background-color: rgba(110, 173, 14, .7);
+        justify-content: center;
+        align-self: center;
+        border: 2px solid;
+        font: inherit;
+        line-height: 1;
+        margin: 3vh;
+        padding: 1vw;
+        width: 50%;
+
+    }
+    .descriptive-text {
+        width: 50%;
+        text-align: center;
+        line-height: 1;
+        padding: 1vw;
+        justify-content: center;
+        align-self: center;
+        background-color: #00b0c8;
+        border: 1px solid #00b0c8;
+        border-bottom: 0px;
+        outline: solid .5px yellowgreen;
+        outline-offset: -1px;
+    }
+    .info-display {
+        width: 50%;
+        text-align: center;
+        line-height: 1;
+        padding: 1vw;
+        justify-content: center;
+        align-self: center;
+        background-color: yellowgreen;
+        border: 1px solid yellowgreen;
+        outline: solid .5px #00b0c8;
+        outline-offset: -1px;
+    }
+    .pic-container {
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        height: 40vh;
+        padding: 10%;
+
+        .char-image{
+            background-color: darkmagenta;
+            height: 100%;
+            visibility: hidden;
+            border: dashed 3px white;
+            border-radius: 50%;
+            transition-property: height, box-shadow;
+            transition-duration: 1s;
+            &:hover {
+                height: 130%;
+                -webkit-box-shadow: 0px 0px 50px 50px #000000; 
+                box-shadow: 0px 0px 50px 50px #000000; 
+            }
+        }
+    }
+    
+}

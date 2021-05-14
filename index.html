@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <title>ejemplo API R&M</title>
+</head>
+<body>
+  
+  <customchar-element id="3" name="customname"> </customchar-element>
+
+
+  <script>
+      const testTemplate = document.createElement('template');
+
+      testTemplate.innerHTML = `
+        <link rel="stylesheet" href="./styles/style.css">
+
+          <div class="general-container">
+            <div class="title-container">
+                <h1>Rick & Morty Characters</h1>
+            </div>
+            <input placeholder="Character ID" class="text-input"/> <button class="search-btn"> Search </button>
+            <div id="idchar"> </div><br/>
+            <div class="info-display" id="name"> --- </div><br/>
+            <div class="info-display" id="status"> --- </div><br/>
+            <div class="info-display" id="species"> --- </div><br/>
+            <div class="info-display" id="type"> --- </div><br/>
+            <div class="info-display" id="gender"> --- </div><br/>
+            <div class="info-display" id="origin"> --- </div><br/>
+            <div class="pic-container" id="pic-container">
+            <img class="char-image" id="image" src="" alt="Character image">
+            </div><br/>    
+          </div>
+      `;
+
+    class CustomTag extends HTMLElement {
+
+        constructor() {
+            super();
+            console.log('tag inicializado');
+            console.log('==== constructor ====');
+            this._shadowRoot = this.attachShadow({ 'mode': 'open' });
+            this._shadowRoot.appendChild(testTemplate.content.cloneNode(true));
+        }
+
+        static get observedAttributes() {
+            return ['id', 'name']
+        }
+
+        connectedCallback() {
+            // una vez que se conecta el componente compruebo con un msj en la consola.
+            console.log('tag conectado');
+            console.log('==== connectedCallback ====');
+            //this.id = this._shadowRoot.querySelector('#idchar');
+            this.nombre = this._shadowRoot.querySelector('#name');
+            this.nombre.insertAdjacentHTML('beforebegin', '<p class="descriptive-text"> Name:</p>');
+
+            this.status = this._shadowRoot.querySelector('#status');
+            this.status.insertAdjacentHTML('beforebegin', '<p class="descriptive-text"> Status:</p>');
+
+            this.especie = this._shadowRoot.querySelector('#species');
+            this.especie.insertAdjacentHTML('beforebegin', '<p class="descriptive-text"> Species:</p>');
+            
+            this.tipo = this._shadowRoot.querySelector('#type');
+            this.tipo.insertAdjacentHTML('beforebegin', '<p class="descriptive-text"> Type:</p>');
+            
+            this.genero = this._shadowRoot.querySelector('#gender');
+            this.genero.insertAdjacentHTML('beforebegin', '<p class="descriptive-text"> Gender:</p>');
+            
+            this.origen = this._shadowRoot.querySelector('#origin');
+            this.origen.insertAdjacentHTML('beforebegin', '<p class="descriptive-text"> Origin:</p>');
+            
+            this.imagen = this._shadowRoot.querySelector('#image');
+            this.imgsource = this.imagen.src;
+            
+            this.input = this._shadowRoot.querySelector('input');
+            this.b = this._shadowRoot.querySelector('button');
+            
+
+            this.b.addEventListener('click', () => {
+
+                
+                fetch('https://rickandmortyapi.com/api/character/' + this.input.value + '/')
+                    .then(resp => resp.json())
+                    .then(data => {
+
+                    //this.id.innerHTML = data.id.toString();
+                    this.nombre.innerHTML = data.name;
+                    this.status.innerHTML = data.status;
+                    this.especie.innerHTML = data.species;
+                    this.tipo.innerHTML = data.type;
+                    this.genero.innerHTML = data.gender;
+                    this.origen.innerHTML = data.origin.name;
+                    this.imagen.src = data.image;
+                    this.imagen.style.visibility="visible";
+                    
+
+                    });
+            })
+
+
+
+        }
+
+        // acciones a tomar en caso de que se detecte una desconexion del componente
+        disconnectedCallback() {
+            console.log('desconecto el componente')
+            console.log('=== disconnectedCallback() ===');
+
+            // en caso de "desconectar" el componente, la ventana se cerrará...
+            if (confirm('esta seguro que quiere cerrar la pantalla?')) {
+                window.close();
+            } else {
+                console.log('el elemento fue borrado debe recargar la pagina');
+            }
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            //muestro en consola las modificaciones de los atributos
+            console.log(name + " " + oldValue + " " + newValue);
+            
+
+        }
+
+
+    }
+
+      window.customElements.define('customchar-element', CustomTag);
+
+  </script>
+
+</body>
+</html>
